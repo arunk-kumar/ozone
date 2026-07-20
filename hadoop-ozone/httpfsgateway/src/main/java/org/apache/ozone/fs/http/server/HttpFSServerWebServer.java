@@ -30,6 +30,7 @@ import java.util.Set;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdds.annotation.InterfaceAudience;
 import org.apache.hadoop.hdds.conf.OzoneConfiguration;
+import org.apache.hadoop.hdds.server.http.BuildInfoMetrics;
 import org.apache.hadoop.hdds.server.http.HttpServer2;
 import org.apache.hadoop.hdds.utils.LegacyHadoopConfigurationSource;
 import org.apache.hadoop.security.AuthenticationFilterInitializer;
@@ -153,6 +154,7 @@ public class HttpFSServerWebServer {
 
   public void start() throws IOException {
     httpServer.start();
+    BuildInfoMetrics.create("httpfs");
   }
 
   public void join() throws InterruptedException {
@@ -161,6 +163,7 @@ public class HttpFSServerWebServer {
 
   public void stop() throws Exception {
     httpServer.stop();
+    BuildInfoMetrics.unregister();
   }
 
   public URL getUrl() {
